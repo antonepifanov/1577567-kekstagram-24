@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
-* Студент: [Антон Антон](https://up.htmlacademy.ru/javascript/24/user/1577567).
-* Наставник: `Неизвестно`.
+* Студент: [Антон Епифанов](https://up.htmlacademy.ru/javascript/24/user/1577567).
+* Наставник: [Максим Деев](https://htmlacademy.ru/profile/id685777).
 
 ---
 
