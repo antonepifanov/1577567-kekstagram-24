@@ -63,11 +63,12 @@ const createPhotosDescriptions = DESCRIPTIONS.map((description, index) => {
   const getMessages = () => {
     let message = '';
     const numberOfMessage = getRandomPositiveInteger(1, 2);
-    for (let i = 0; i < numberOfMessage; i++) {
-      const randomMessageIndex = getRandomPositiveInteger(0, COMMENTS.length - 1);
-      if (message !== COMMENTS[randomMessageIndex]) {
-        message = message + COMMENTS[randomMessageIndex];
+    for (let counter = 0; counter < numberOfMessage; counter++) {
+      let randomMessageIndex = getRandomPositiveInteger(0, COMMENTS.length - 1);
+      while (message === COMMENTS[randomMessageIndex]) {
+        randomMessageIndex = getRandomPositiveInteger(0, COMMENTS.length - 1);
       }
+      message = message + COMMENTS[randomMessageIndex];
     }
     return message;
   };
