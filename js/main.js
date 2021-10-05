@@ -1,22 +1,100 @@
-// Источник https://learn.javascript.ru/task/random-int-min-max
+const COMMENTS = [
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
+];
 
-const getRandomInteger = (min, max) => {
-  let rand;
-  switch (true) {
-    case min < 0 || max < 0:
-      return 'Мне не разрешают работать с отрицательными числами';
-    case min > max:
-      rand = max - 0.5 + Math.random() * (min - max + 1);
-      return Math.round(rand);
-    case min===max:
-      return rand = min;
-    default:
-      rand = min - 0.5 + Math.random() * (max - min + 1);
-      return Math.round(rand);
-  }
-};
-getRandomInteger(3, 90);
+const NAMES = [
+  'Антон',
+  'Максим',
+  'Алёна',
+  'Михаил',
+  'Дмитрий',
+];
 
-const isLengthOfStringCorrect = (string, length) => !(string.length > length);
-isLengthOfStringCorrect('При выборе за основной показатель нужно взять читабельность кода. Чем код понятнее, нагляднее, тем удобнее его рефакторить (так называется улучшение кода) и поддерживать. Тернарный оператор может как сделать код проще, так и необоснованно его усложнить. Это зависит от ситуации.', 140);
+const DESCRIPTIONS = [
+  'Около рая',
+  'Указатель',
+  'Вид на море',
+  '(  Y  ) и фотик',
+  'Завтрак',
+  'Black star',
+  'Клубника',
+  'Морс',
+  'Самолёт',
+  'Обувь',
+  'Зной',
+  'Audi',
+  'Перекус',
+  'Котик',
+  'Ноги в тепле',
+  'На высоте',
+  'Хор',
+  'Ретро',
+  'Инновации',
+  'Пальмы',
+  'Салатик',
+  'Закат',
+  'Краб',
+  'Концерт',
+  'Сафари',
+];
 
+function getRandomPositiveInteger (min, max) {
+  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
+  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+}
+
+let commentsCount = 0;
+
+const createPhotosDescriptions = DESCRIPTIONS.map((description, index) => {
+  const indexNumber = index + 1;
+
+  const getAvatarUrl = () => {
+    const avatarUrl = getRandomPositiveInteger(1, 6);
+    return `img/avatar-${avatarUrl}.svg`;
+  };
+
+  const getMessages = () => {
+    let message = '';
+    const numberOfMessage = getRandomPositiveInteger(1, 2);
+    for (let i = 0; i < numberOfMessage; i++) {
+      const randomMessageIndex = getRandomPositiveInteger(0, COMMENTS.length - 1);
+      if (message !== COMMENTS[randomMessageIndex]) {
+        message = message + COMMENTS[randomMessageIndex];
+      }
+    }
+    return message;
+  };
+
+  const getName = () => NAMES[getRandomPositiveInteger(0, NAMES.length - 1)];
+
+  const createComment = () => {
+    commentsCount = commentsCount + 1;
+    return {
+      id: commentsCount,
+      avatar: getAvatarUrl(),
+      message: getMessages(),
+      name: getName(),
+    };
+  };
+
+  const createComments = () => {
+    const numberOfComments = getRandomPositiveInteger(1, 4);
+    const comments = Array.from({length: numberOfComments}, createComment);
+    return comments;
+  };
+
+  return {
+    id: indexNumber,
+    url: `photos/${indexNumber}.jpg`,
+    description: description,
+    likes: getRandomPositiveInteger(15, 200),
+    comments: createComments(),
+  };
+});
