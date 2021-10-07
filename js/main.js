@@ -43,6 +43,14 @@ const DESCRIPTIONS = [
   'Сафари',
 ];
 
+const MIN_AVATAR_NUMBER = 1;
+const MAX_AVATAR_NUMBER = 6;
+const MIN_AMOUNT_OF_MESSAGE = 1;
+const MAX_AMOUNT_OF_MESSAGE = 2;
+const MIN_AMOUNT_OF_COMMENTS = 1;
+const MAX_AMOUNT_OF_COMMENTS = 4;
+let commentsCount = 0;
+
 function getRandomPositiveInteger (min, max) {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
@@ -50,52 +58,53 @@ function getRandomPositiveInteger (min, max) {
   return Math.floor(result);
 }
 
-let commentsCount = 0;
+const getAvatarUrl = () => {
+  const avatarUrl = getRandomPositiveInteger(MIN_AVATAR_NUMBER, MAX_AVATAR_NUMBER);
+  return `img/avatar-${avatarUrl}.svg`;
+};
 
-const createPhotosDescriptions = DESCRIPTIONS.map((description, index) => {
-  const indexNumber = index + 1;
-
-  const getAvatarUrl = () => {
-    const avatarUrl = getRandomPositiveInteger(1, 6);
-    return `img/avatar-${avatarUrl}.svg`;
-  };
-
-  const getMessages = () => {
-    let message = '';
-    const numberOfMessage = getRandomPositiveInteger(1, 2);
-    for (let counter = 0; counter < numberOfMessage; counter++) {
-      let randomMessageIndex = getRandomPositiveInteger(0, COMMENTS.length - 1);
-      while (message === COMMENTS[randomMessageIndex]) {
-        randomMessageIndex = getRandomPositiveInteger(0, COMMENTS.length - 1);
-      }
-      message = message + COMMENTS[randomMessageIndex];
+const getMessages = () => {
+  let message = '';
+  const numberOfMessage = getRandomPositiveInteger(MIN_AMOUNT_OF_MESSAGE, MAX_AMOUNT_OF_MESSAGE);
+  for (let i = 0; i < numberOfMessage; i++) {
+    let randomMessageIndex = getRandomPositiveInteger(0, COMMENTS.length - 1);
+    while (message === COMMENTS[randomMessageIndex]) {
+      randomMessageIndex = getRandomPositiveInteger(0, COMMENTS.length - 1);
     }
-    return message;
-  };
+    message = message + COMMENTS[randomMessageIndex];
+  }
+  return message;
+};
 
-  const getName = () => NAMES[getRandomPositiveInteger(0, NAMES.length - 1)];
+const getName = () => NAMES[getRandomPositiveInteger(0, NAMES.length - 1)];
 
-  const createComment = () => {
-    commentsCount = commentsCount + 1;
-    return {
-      id: commentsCount,
-      avatar: getAvatarUrl(),
-      message: getMessages(),
-      name: getName(),
-    };
-  };
-
-  const createComments = () => {
-    const numberOfComments = getRandomPositiveInteger(1, 4);
-    const comments = Array.from({length: numberOfComments}, createComment);
-    return comments;
-  };
-
+const createComment = () => {
+  commentsCount = commentsCount + 1;
   return {
-    id: indexNumber,
-    url: `photos/${indexNumber}.jpg`,
-    description: description,
-    likes: getRandomPositiveInteger(15, 200),
-    comments: createComments(),
+    id: commentsCount,
+    avatar: getAvatarUrl(),
+    message: getMessages(),
+    name: getName(),
   };
-});
+};
+
+const createComments = () => {
+  const numberOfComments = getRandomPositiveInteger(MIN_AMOUNT_OF_COMMENTS, MAX_AMOUNT_OF_COMMENTS);
+  const comments = Array.from({length: numberOfComments}, createComment);
+  return comments;
+};
+
+const createPhotosDescriptions = () => {
+  const arrayOfPhotosDescriptions = DESCRIPTIONS.map((description, index) => {
+    const indexNumber = index + 1;
+    return {
+      id: indexNumber,
+      url: `photos/${indexNumber}.jpg`,
+      description: description,
+      likes: getRandomPositiveInteger(15, 200),
+      comments: createComments(),
+    };
+  });
+  return arrayOfPhotosDescriptions;
+};
+createPhotosDescriptions();
