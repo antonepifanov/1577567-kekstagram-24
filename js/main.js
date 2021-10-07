@@ -47,9 +47,10 @@ const MIN_AVATAR_NUMBER = 1;
 const MAX_AVATAR_NUMBER = 6;
 const MIN_AMOUNT_OF_MESSAGE = 1;
 const MAX_AMOUNT_OF_MESSAGE = 2;
+const MIN_AMOUNT_OF_LIKES = 15;
+const MAX_AMOUNT_OF_LIKES = 200;
 const MIN_AMOUNT_OF_COMMENTS = 1;
 const MAX_AMOUNT_OF_COMMENTS = 4;
-let commentsCount = 0;
 
 function getRandomPositiveInteger (min, max) {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
@@ -71,22 +72,35 @@ const getMessages = () => {
     while (message === COMMENTS[randomMessageIndex]) {
       randomMessageIndex = getRandomPositiveInteger(0, COMMENTS.length - 1);
     }
-    message = message + COMMENTS[randomMessageIndex];
+    message += COMMENTS[randomMessageIndex];
   }
   return message;
 };
 
 const getName = () => NAMES[getRandomPositiveInteger(0, NAMES.length - 1)];
 
-const createComment = () => {
-  commentsCount = commentsCount + 1;
-  return {
-    id: commentsCount,
-    avatar: getAvatarUrl(),
-    message: getMessages(),
-    name: getName(),
+const getAmountOfLikes = () => getRandomPositiveInteger(MIN_AMOUNT_OF_LIKES, MAX_AMOUNT_OF_LIKES);
+
+const createRandomCommentId = () => {
+  const previousId = [];
+  return function () {
+    let commentId = getRandomPositiveInteger(1, Number.MAX_SAFE_INTEGER);
+    while (previousId.includes(commentId)) {
+      commentId = getRandomPositiveInteger(1, Number.MAX_SAFE_INTEGER);
+    }
+    previousId.push(commentId);
+    return commentId;
   };
 };
+
+const getRandomCommentId = createRandomCommentId();
+
+const createComment = () => ({
+  id: getRandomCommentId(),
+  avatar: getAvatarUrl(),
+  message: getMessages(),
+  name: getName(),
+});
 
 const createComments = () => {
   const numberOfComments = getRandomPositiveInteger(MIN_AMOUNT_OF_COMMENTS, MAX_AMOUNT_OF_COMMENTS);
@@ -101,7 +115,7 @@ const createPhotosDescriptions = () => {
       id: indexNumber,
       url: `photos/${indexNumber}.jpg`,
       description: description,
-      likes: getRandomPositiveInteger(15, 200),
+      likes: getAmountOfLikes(),
       comments: createComments(),
     };
   });
