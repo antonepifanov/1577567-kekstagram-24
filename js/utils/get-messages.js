@@ -1,15 +1,15 @@
 import {getRandomPositiveInteger} from './get-random-positive-integer.js';
-import {MIN_AMOUNT_OF_MESSAGE, MAX_AMOUNT_OF_MESSAGE, COMMENTS} from '../constants.js';
+import {MIN_AMOUNT_OF_MESSAGE, MAX_AMOUNT_OF_MESSAGE} from '../constants.js';
 
-const getMessages = () => {
+const getMessages = (arrayOfComments) => {
   let message = '';
   const numberOfMessage = getRandomPositiveInteger(MIN_AMOUNT_OF_MESSAGE, MAX_AMOUNT_OF_MESSAGE);
   for (let i = 0; i < numberOfMessage; i++) {
-    let randomMessageIndex = getRandomPositiveInteger(0, COMMENTS.length - 1);
-    while (message === COMMENTS[randomMessageIndex]) {
-      randomMessageIndex = getRandomPositiveInteger(0, COMMENTS.length - 1);
+    let randomMessageIndex = getRandomPositiveInteger(0, arrayOfComments.length - 1);
+    while (message === arrayOfComments[randomMessageIndex]) {
+      randomMessageIndex = getRandomPositiveInteger(0, arrayOfComments.length - 1);
     }
-    message += COMMENTS[randomMessageIndex];
+    message += arrayOfComments[randomMessageIndex];
   }
   return message;
 };

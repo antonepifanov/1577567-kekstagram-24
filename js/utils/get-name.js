@@ -1,6 +1,5 @@
 import {getRandomPositiveInteger} from './get-random-positive-integer.js';
-import {NAMES} from '../constants.js';
 
-const getName = () => NAMES[getRandomPositiveInteger(0, NAMES.length - 1)];
+const getName = (arrayOfNames) => arrayOfNames[getRandomPositiveInteger(0, arrayOfNames.length - 1)];
 
 export {getName};
