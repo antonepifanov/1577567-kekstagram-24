@@ -1,4 +1,4 @@
-import {COMMENTS, NAMES, DESCRIPTIONS} from './constants.js';
+import {COMMENTS, NAMES} from './constants.js';
 import {getAmountOfLikes} from './utils/get-amount-of-likes.js';
 import {createComments} from './utils/create-comments.js';
 
@@ -15,4 +15,5 @@ const createPhotosDescriptions = (arrayOfDescriptions) => {
   });
   return arrayOfPhotosDescriptions;
 };
-createPhotosDescriptions(DESCRIPTIONS);
+
+export {createPhotosDescriptions};
