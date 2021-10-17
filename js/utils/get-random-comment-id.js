@@ -6,7 +6,7 @@ const createRandomCommentId = () => {
   return function () {
     let commentId = getRandomPositiveInteger(MIN_ID_OF_COMMENT, MAX_ID_OF_COMMENT);
     while (previousId.includes(commentId)) {
-      commentId = getRandomPositiveInteger(MIN_ID_OF_COMMENT, MIN_ID_OF_COMMENT);
+      commentId = getRandomPositiveInteger(MIN_ID_OF_COMMENT, MAX_ID_OF_COMMENT);
     }
     previousId.push(commentId);
     return commentId;
