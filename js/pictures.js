@@ -14,3 +14,5 @@ userPhotos.forEach(({url, likes, comments}) => {
   photoFragment.appendChild(picturesItem);
 });
 picturesContainer.appendChild(photoFragment);
+
+export {userPhotos};

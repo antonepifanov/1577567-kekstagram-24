@@ -26,6 +26,7 @@ const openModal = (evt) => {
     socialCommentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
   }
+
   document.addEventListener('keydown', onModalEscKeydown);
 };
 
@@ -58,3 +59,5 @@ picturesContainer.addEventListener('keydown', onPictureEnterKeydown);
 closeButton.addEventListener('click', () => {
   closeModal();
 });
+
+export {bigPicture, picturesContainer, onPictureClick, onPictureEnterKeydown};

@@ -1,2 +1,3 @@
 import './pictures.js';
-import './get-fullscreen-photo.js';
+import './picture-modal.js';
+import './render-picture-modal.js';
