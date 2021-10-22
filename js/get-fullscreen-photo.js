@@ -8,47 +8,17 @@ const socialCommentCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const body = document.querySelector('body');
 
-const closeModal = () => {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
-
-  document.removeEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      bigPicture.classList.add('hidden');
-    }
-  });
-};
-
-const onPopupEscKeydown = (evt) => {
+// Функция обработчика события нажатия на ESCAPE
+const onModalEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeModal();
+    bigPicture.classList.add('hidden');
+    body.classList.remove('modal-open');
   }
 };
 
-const closeByEscape = () => {
-  document.addEventListener('keydown', onPopupEscKeydown);
-};
-
-const closeByClick = () => {
-  closeButton.addEventListener('click', () => {
-    closeModal();
-  });
-};
-closeByClick();
-
-const closeByEnter = () => {
-  closeButton.addEventListener('keydown', (evt) => {
-    if (isEnterKey(evt)) {
-      closeModal();
-    }
-  });
-};
-closeByEnter();
-
-
-const onPictureClick = (evt) => {
+// Функция для показа окна
+const openModal = (evt) => {
   if (evt.target.closest('.picture')) {
     evt.preventDefault();
     bigPicture.classList.remove('hidden');
@@ -56,20 +26,35 @@ const onPictureClick = (evt) => {
     socialCommentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
   }
-  closeByEscape();
+  document.addEventListener('keydown', onModalEscKeydown);
 };
-picturesContainer.addEventListener('click', onPictureClick);
 
-const onPictureEnter = (evt) => {
+// Функция для скрытия окна
+const closeModal = () => {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onModalEscKeydown);
+};
+
+// Функция обработчика события клика на картинку
+const onPictureClick = (evt) => {
+  openModal(evt);
+};
+
+// Функция обработчика события нажатия ENTER на картинку
+const onPictureEnterKeydown = (evt) => {
   if (isEnterKey(evt)) {
-    if (evt.target.closest('.picture')) {
-      evt.preventDefault();
-      bigPicture.classList.remove('hidden');
-      body.classList.add('modal-open');
-      socialCommentCount.classList.add('hidden');
-      commentsLoader.classList.add('hidden');
-    }
+    openModal(evt);
   }
 };
-picturesContainer.addEventListener('keydown', onPictureEnter);
 
+// Обработчик события клика на картинку                           ОТКРЫВАЕТ МОДАЛЬНОЕ ОКНО
+picturesContainer.addEventListener('click', onPictureClick);
+
+// Обработчик события нажатия нажатия ENTER на картинку           ОТКРЫВАЕТ МОДАЛЬНОЕ ОКНО
+picturesContainer.addEventListener('keydown', onPictureEnterKeydown);
+
+// Обработчик события клика на КРЕСТИК                            ЗАКРЫВАЕТ МОДАЛЬНОЕ ОКНО
+closeButton.addEventListener('click', () => {
+  closeModal();
+});
