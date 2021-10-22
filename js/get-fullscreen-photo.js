@@ -8,19 +8,61 @@ const socialCommentCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const body = document.querySelector('body');
 
+const closeModal = () => {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+
+  document.removeEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      bigPicture.classList.add('hidden');
+    }
+  });
+};
+
+const onPopupEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeModal();
+  }
+};
+
+const closeByEscape = () => {
+  document.addEventListener('keydown', onPopupEscKeydown);
+};
+
+const closeByClick = () => {
+  closeButton.addEventListener('click', () => {
+    closeModal();
+  });
+};
+closeByClick();
+
+const closeByEnter = () => {
+  closeButton.addEventListener('keydown', (evt) => {
+    if (isEnterKey(evt)) {
+      closeModal();
+    }
+  });
+};
+closeByEnter();
+
+
 const onPictureClick = (evt) => {
-  if (evt.target.matches('.picture__img')) {
+  if (evt.target.closest('.picture')) {
     evt.preventDefault();
     bigPicture.classList.remove('hidden');
     body.classList.add('modal-open');
     socialCommentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
   }
+  closeByEscape();
 };
+picturesContainer.addEventListener('click', onPictureClick);
 
 const onPictureEnter = (evt) => {
   if (isEnterKey(evt)) {
-    if (evt.target.matches('.picture')) {
+    if (evt.target.closest('.picture')) {
       evt.preventDefault();
       bigPicture.classList.remove('hidden');
       body.classList.add('modal-open');
@@ -29,52 +71,5 @@ const onPictureEnter = (evt) => {
     }
   }
 };
+picturesContainer.addEventListener('keydown', onPictureEnter);
 
-const closeByEscape = () => {
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      bigPicture.classList.add('hidden');
-    }
-  });
-};
-
-const closeByClick = () => {
-  closeButton.addEventListener('click', () => {
-    bigPicture.classList.add('hidden');
-  });
-};
-closeByClick();
-
-const closeByEnter = () => {
-  closeButton.addEventListener('keydown', (evt) => {
-    if (isEnterKey(evt)) {
-      bigPicture.classList.add('hidden');
-    }
-  });
-};
-closeByEnter();
-const openByEnter = () => {
-  picturesContainer.addEventListener('keydown', onPictureEnter);
-};
-openByEnter();
-
-const openModal = () => {
-  picturesContainer.addEventListener('click', onPictureClick);
-  closeByEscape();
-};
-
-const openByClick = () => {
-  openModal();
-};
-openByClick();
-
-const closeModal = () => {
-  bigPicture.classList.add('hidden');
-  document.removeEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      bigPicture.classList.add('hidden');
-    }
-  });
-};
