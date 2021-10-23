@@ -1,8 +1,9 @@
 import {isEscapeKey} from './utils/is-escape-key.js';
 import {isEnterKey} from './utils/is-enter-key.js';
+import {bigPicture, renderBigPicture} from './render-big-picture.js';
 
 const picturesContainer = document.querySelector('.pictures');
-const bigPicture = document.querySelector('.big-picture');
+const pictures = document.querySelectorAll('.picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const socialCommentCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
@@ -26,6 +27,10 @@ const openModal = (evt) => {
     socialCommentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
   }
+  pictures.forEach((picture, index) => {
+    picture = evt.target.closest('.picture');
+    renderBigPicture(picture, index);
+  });
 
   document.addEventListener('keydown', onModalEscKeydown);
 };
@@ -59,5 +64,3 @@ picturesContainer.addEventListener('keydown', onPictureEnterKeydown);
 closeButton.addEventListener('click', () => {
   closeModal();
 });
-
-export {bigPicture, picturesContainer, onPictureClick, onPictureEnterKeydown};
