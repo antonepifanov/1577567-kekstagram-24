@@ -1,4 +1,4 @@
-import {userPhotos} from './pictures.js';
+
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
@@ -7,11 +7,11 @@ const bigPictureCommentsCount = bigPicture.querySelector('.comments-count');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 
 
-const renderBigPicture = (picture, index) => {
-  bigPictureImage.src = picture.querySelector('img').src;
-  bigPictureLikes.textContent = picture.querySelector('.picture__likes').textContent;
-  bigPictureCommentsCount.textContent = picture.querySelector('.picture__comments').textContent;
-  bigPictureDescription.textContent = userPhotos[index].description;
+const renderBigPicture = (picture) => {
+  bigPictureImage.src = picture.url;
+  bigPictureLikes.textContent = picture.likes;
+  bigPictureCommentsCount.textContent = picture.comments.length;
+  bigPictureDescription.textContent = picture.description;
 };
 
 export {renderBigPicture, bigPicture};

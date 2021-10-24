@@ -1,6 +1,7 @@
 import {isEscapeKey} from './utils/is-escape-key.js';
 import {isEnterKey} from './utils/is-enter-key.js';
 import {bigPicture, renderBigPicture} from './render-big-picture.js';
+import {userPhotos} from './pictures.js';
 
 const picturesContainer = document.querySelector('.pictures');
 const pictures = document.querySelectorAll('.picture');
@@ -28,8 +29,9 @@ const openModal = (evt) => {
     commentsLoader.classList.add('hidden');
   }
   pictures.forEach((picture, index) => {
-    picture = evt.target.closest('.picture');
-    renderBigPicture(picture, index);
+    if (picture === evt.target.closest('.picture')) {
+      renderBigPicture(userPhotos[index]);
+    }
   });
 
   document.addEventListener('keydown', onModalEscKeydown);
