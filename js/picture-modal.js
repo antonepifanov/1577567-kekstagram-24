@@ -1,8 +1,10 @@
 import {isEscapeKey} from './utils/is-escape-key.js';
 import {isEnterKey} from './utils/is-enter-key.js';
-import {bigPicture, renderBigPicture} from './render-big-picture.js';
+import {renderBigPicture} from './render-big-picture.js';
 import {userPhotos} from './pictures.js';
+import {createCommentsBlock} from './create-comments-block.js';
 
+const bigPicture = document.querySelector('.big-picture');
 const picturesContainer = document.querySelector('.pictures');
 const pictures = document.querySelectorAll('.picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
@@ -31,9 +33,9 @@ const openModal = (evt) => {
   pictures.forEach((picture, index) => {
     if (picture === evt.target.closest('.picture')) {
       renderBigPicture(userPhotos[index]);
+      createCommentsBlock(userPhotos[index]);
     }
   });
-
   document.addEventListener('keydown', onModalEscKeydown);
 };
 
