@@ -1,6 +1,5 @@
 import {isEscapeKey} from './utils/is-escape-key.js';
 import {undoDefaultAction} from './utils/undo-default-action.js';
-//import {uniqueHashtags} from './utils/unique-hashtags.js';
 
 const body = document.querySelector('body');
 const pictureUploadForm = body.querySelector('.img-upload__form');
@@ -28,14 +27,14 @@ uploadUserPictureInput.addEventListener('change', () => {
     const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
     hashtagField.setCustomValidity('');
     hashtagKit.forEach((hashtag, index, array) => {
-      if (array.includes(hashtag, index + 1)) {
+      if (hashtagKit.length > MAX_HASHTAG_COUNT) {
+        hashtagField.setCustomValidity(`Нельзя добавлять более ${MAX_HASHTAG_COUNT} хэш-тегов`);
+      } else if (array.includes(hashtag, index + 1)) {
         hashtagField.setCustomValidity('Xэш-тег не может повторяться');
       } else if (hashtag.length > 0) {
         if(!re.test(hashtag)){
           hashtagField.setCustomValidity('Xэш-тег начинается с # и состоит из букв и чисел. Максимальная длина одного хэш-тега 20 символов. Хэш-теги разделяются пробелами');
         }
-      }  else if (hashtagKit.length > MAX_HASHTAG_COUNT) {
-        hashtagField.setCustomValidity(`Нельзя добавлять более ${MAX_HASHTAG_COUNT} хэш-тегов`);
       } else {
         hashtagField.setCustomValidity('');
       }
