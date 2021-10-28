@@ -1,5 +1,6 @@
 import {isEscapeKey} from './utils/is-escape-key.js';
 import {undoDefaultAction} from './utils/undo-default-action.js';
+import {uniqueHashtags} from './utils/unique-hashtags.js';
 
 const body = document.querySelector('body');
 const pictureUploadForm = body.querySelector('.img-upload__form');
@@ -23,13 +24,15 @@ uploadUserPictureInput.addEventListener('change', () => {
   pictureEditModal.classList.remove('hidden');
   body.classList.add('modal-open');
   hashtagField.addEventListener('input', () => {
-    const hashtagKit = hashtagField.value.toLowerCase().split(' ');
+    const hashtagKit = hashtagField.value.toLowerCase().trim().split(' ');
     const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-    hashtagKit.forEach((hashtag, index, array) => {
-      if (array.includes(hashtag, index + 1)) {
+    hashtagKit.forEach((hashtag) => {
+      if (hashtagKit.length > uniqueHashtags(hashtagKit)) {
         hashtagField.setCustomValidity('Xэш-тег не может повторяться');
-      } else if (!re.test(hashtag)) {
-        hashtagField.setCustomValidity('Xэш-тег начинается с # и состоит из букв и чисел. Максимальная длина одного хэш-тега 20 символов. Хэш-теги разделяются пробелами');
+      } else if (!re.test(hashtag)){
+        if (hashtag.length > 0) {
+          hashtagField.setCustomValidity('Xэш-тег начинается с # и состоит из букв и чисел. Максимальная длина одного хэш-тега 20 символов. Хэш-теги разделяются пробелами');
+        }
       } else if (hashtagKit.length > MAX_HASHTAG_COUNT) {
         hashtagField.setCustomValidity(`Нельзя добавлять более ${MAX_HASHTAG_COUNT} хэш-тегов`);
       } else {
