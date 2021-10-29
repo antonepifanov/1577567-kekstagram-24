@@ -1,7 +1,7 @@
 import {isEscapeKey} from './utils/is-escape-key.js';
 import {isEnterKey} from './utils/is-enter-key.js';
 import {renderBigPicture} from './render-big-picture.js';
-import {userPhotos} from './pictures.js';
+import {userPhotos} from './render-pictures.js';
 import {createCommentsBlock} from './create-comments-block.js';
 
 const bigPicture = document.querySelector('.big-picture');
