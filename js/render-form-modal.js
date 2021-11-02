@@ -1,5 +1,6 @@
 import {isEscapeKey} from './utils/is-escape-key.js';
 import {undoDefaultAction} from './utils/undo-default-action.js';
+import { toScale } from './to-scale.js';
 
 const body = document.querySelector('body');
 const pictureUploadForm = body.querySelector('.img-upload__form');
@@ -22,6 +23,7 @@ const onModalEscKeydown = (evt) => {
 uploadUserPictureInput.addEventListener('change', () => {
   pictureEditModal.classList.remove('hidden');
   body.classList.add('modal-open');
+  toScale();
   hashtagField.addEventListener('input', () => {
     const hashtagKit = hashtagField.value.toLowerCase().trim().split(' ');
     const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
