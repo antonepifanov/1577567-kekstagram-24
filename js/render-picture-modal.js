@@ -8,8 +8,6 @@ const bigPicture = document.querySelector('.big-picture');
 const picturesContainer = document.querySelector('.pictures');
 const pictures = document.querySelectorAll('.picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
-const socialCommentCount = bigPicture.querySelector('.social__comment-count');
-const commentsLoader = bigPicture.querySelector('.comments-loader');
 const body = document.querySelector('body');
 
 // Функция обработчика события нажатия на ESCAPE
@@ -27,8 +25,6 @@ const openModal = (evt) => {
     evt.preventDefault();
     bigPicture.classList.remove('hidden');
     body.classList.add('modal-open');
-    socialCommentCount.classList.add('hidden');
-    commentsLoader.classList.add('hidden');
   }
   pictures.forEach((picture, index) => {
     if (picture === evt.target.closest('.picture')) {

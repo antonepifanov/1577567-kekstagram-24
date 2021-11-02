@@ -4,11 +4,11 @@ const bigPictureLikes = bigPicture.querySelector('.likes-count');
 const bigPictureCommentsCount = bigPicture.querySelector('.comments-count');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 
-const renderBigPicture = (picture) => {
-  bigPictureImage.src = picture.url;
-  bigPictureLikes.textContent = picture.likes;
-  bigPictureCommentsCount.textContent = picture.comments.length;
-  bigPictureDescription.textContent = picture.description;
+const renderBigPicture = ({url, likes, comments, description}) => {
+  bigPictureImage.src = url;
+  bigPictureLikes.textContent = likes;
+  bigPictureCommentsCount.textContent = comments.length;
+  bigPictureDescription.textContent = description;
 };
 
 export {renderBigPicture};
