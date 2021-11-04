@@ -1,6 +1,6 @@
 import {isEscapeKey} from './utils/is-escape-key.js';
 import {undoDefaultAction} from './utils/undo-default-action.js';
-import {scale} from './scale.js';
+import {scale, scaleCancel} from './scale.js';
 import {onFiltersChange} from './slider.js';
 
 const body = document.querySelector('body');
@@ -53,6 +53,7 @@ uploadUserPictureInput.addEventListener('change', () => {
 pictureEditFormCancel.addEventListener('click', () => {
   pictureEditModal.classList.add('hidden');
   body.classList.remove('modal-open');
+  scaleCancel();
   pictureUploadForm.removeEventListener('change', onFiltersChange);
   commentField.removeEventListener('keydown', undoDefaultAction);
   hashtagField.removeEventListener('keydown', undoDefaultAction);

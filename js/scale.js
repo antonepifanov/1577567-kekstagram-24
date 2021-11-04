@@ -29,4 +29,9 @@ const scale = () => {
   buttonMinus.addEventListener('click', onSmallerControlClick);
 };
 
-export {scale};
+const scaleCancel = () => {
+  buttonPlus.removeEventListener('click', onBiggerControlClick);
+  buttonMinus.removeEventListener('click', onSmallerControlClick);
+};
+
+export {scale, scaleCancel};
