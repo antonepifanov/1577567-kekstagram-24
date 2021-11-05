@@ -4,8 +4,72 @@ const sliderElementBlock = pictureUploadForm.querySelector('.effect-level');
 const sliderElement = pictureUploadForm.querySelector('.effect-level__slider');
 const valueElement = pictureUploadForm.querySelector('.effect-level__value');
 
-bigPictureImage.classList.add('effects__preview--none');
-sliderElementBlock.classList.add('hidden');
+const FILTERS_CONFIG = {
+  chrome: {
+    options: {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1,
+      step: 0.1,
+    },
+    style: 'grayscale',
+    unit: '',
+  },
+
+  sepia: {
+    options: {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1,
+      step: 0.1,
+    },
+    style: 'sepia',
+    unit: '',
+  },
+
+  marvin: {
+    options: {
+      range: {
+        min: 0,
+        max: 100,
+      },
+      start: 100,
+      step: 1,
+    },
+    style: 'invert',
+    unit: '%',
+  },
+
+  phobos: {
+    options: {
+      range: {
+        min: 0,
+        max: 3,
+      },
+      start: 3,
+      step: 0.1,
+    },
+    style: 'blur',
+    unit: 'px',
+  },
+
+  heat: {
+    options: {
+      range: {
+        min: 1,
+        max: 3,
+      },
+      start: 3,
+      step: 0.1,
+    },
+    style: 'brightness',
+    unit: '',
+  },
+}
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -28,6 +92,23 @@ noUiSlider.create(sliderElement, {
   },
 });
 
+const toApplyFilter = (filter) => {
+  sliderElementBlock.classList.remove('hidden');
+  sliderElement.noUiSlider.updateOptions(filter.options);
+  sliderElement.noUiSlider.on('update', (values, handle) => {
+    bigPictureImage.style.filter = `${filter.style}(${values[handle]}${filter.unit})`;
+    valueElement.value = values[handle];
+  });
+}
+
+const toUnsetEffect = () => {
+  bigPictureImage.className = '';
+  bigPictureImage.style.filter = 'none';
+  valueElement.value = 'none';
+  bigPictureImage.classList.add('effects__preview--none');
+  sliderElementBlock.classList.add('hidden');
+}
+
 const onFiltersChange = (evt) => {
   if (evt.target.matches('input[type="radio"]')) {
     bigPictureImage.className = '';
@@ -37,77 +118,17 @@ const onFiltersChange = (evt) => {
       bigPictureImage.style.filter = 'none';
       valueElement.value = 'none';
     } else if (evt.target.value === 'chrome') {
-      sliderElementBlock.classList.remove('hidden');
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1,
-        },
-        start: 1,
-        step: 0.1,
-      });
-      sliderElement.noUiSlider.on('update', (values, handle) => {
-        bigPictureImage.style.filter = `grayscale(${values[handle]})`;
-        valueElement.value = values[handle];
-      });
+      toApplyFilter(FILTERS_CONFIG.chrome)
     } else if (evt.target.value === 'sepia') {
-      sliderElementBlock.classList.remove('hidden');
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1,
-        },
-        start: 1,
-        step: 0.1,
-      });
-      sliderElement.noUiSlider.on('update', (values, handle) => {
-        bigPictureImage.style.filter = `sepia(${values[handle]})`;
-        valueElement.value = values[handle];
-      });
+      toApplyFilter(FILTERS_CONFIG.sepia)
     } else if (evt.target.value === 'marvin') {
-      sliderElementBlock.classList.remove('hidden');
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 100,
-        },
-        start: 100,
-        step: 1,
-      });
-      sliderElement.noUiSlider.on('update', (values, handle) => {
-        bigPictureImage.style.filter = `invert(${values[handle]}%)`;
-        valueElement.value = values[handle];
-      });
+      toApplyFilter(FILTERS_CONFIG.marvin)
     } else if (evt.target.value === 'phobos') {
-      sliderElementBlock.classList.remove('hidden');
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 3,
-        },
-        start: 3,
-        step: 0.1,
-      });
-      sliderElement.noUiSlider.on('update', (values, handle) => {
-        bigPictureImage.style.filter = `blur(${values[handle]}px)`;
-        valueElement.value = values[handle];
-      });
+      toApplyFilter(FILTERS_CONFIG.phobos)
     } else if (evt.target.value === 'heat') {
-      sliderElementBlock.classList.remove('hidden');
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 1,
-          max: 3,
-        },
-        start: 3,
-        step: 0.1,
-      });
-      sliderElement.noUiSlider.on('update', (values, handle) => {
-        bigPictureImage.style.filter = `brightness(${values[handle]})`;
-        valueElement.value = values[handle];
-      });
+      toApplyFilter(FILTERS_CONFIG.heat)
     }
   }
 };
 
-export {onFiltersChange};
+export {onFiltersChange, toUnsetEffect};
