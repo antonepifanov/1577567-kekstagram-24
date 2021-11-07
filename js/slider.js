@@ -69,7 +69,7 @@ const FILTERS_CONFIG = {
     style: 'brightness',
     unit: '',
   },
-}
+};
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -99,7 +99,7 @@ const toApplyFilter = (filter) => {
     bigPictureImage.style.filter = `${filter.style}(${values[handle]}${filter.unit})`;
     valueElement.value = values[handle];
   });
-}
+};
 
 const toUnsetEffect = () => {
   bigPictureImage.className = '';
@@ -107,7 +107,7 @@ const toUnsetEffect = () => {
   valueElement.value = 'none';
   bigPictureImage.classList.add('effects__preview--none');
   sliderElementBlock.classList.add('hidden');
-}
+};
 
 const onFiltersChange = (evt) => {
   if (evt.target.matches('input[type="radio"]')) {
@@ -118,15 +118,15 @@ const onFiltersChange = (evt) => {
       bigPictureImage.style.filter = 'none';
       valueElement.value = 'none';
     } else if (evt.target.value === 'chrome') {
-      toApplyFilter(FILTERS_CONFIG.chrome)
+      toApplyFilter(FILTERS_CONFIG.chrome);
     } else if (evt.target.value === 'sepia') {
-      toApplyFilter(FILTERS_CONFIG.sepia)
+      toApplyFilter(FILTERS_CONFIG.sepia);
     } else if (evt.target.value === 'marvin') {
-      toApplyFilter(FILTERS_CONFIG.marvin)
+      toApplyFilter(FILTERS_CONFIG.marvin);
     } else if (evt.target.value === 'phobos') {
-      toApplyFilter(FILTERS_CONFIG.phobos)
+      toApplyFilter(FILTERS_CONFIG.phobos);
     } else if (evt.target.value === 'heat') {
-      toApplyFilter(FILTERS_CONFIG.heat)
+      toApplyFilter(FILTERS_CONFIG.heat);
     }
   }
 };

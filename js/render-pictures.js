@@ -1,9 +1,5 @@
-import {createPhotosDescriptions} from './data.js';
-import {DESCRIPTIONS} from './constants.js';
-
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesContainer = document.querySelector('.pictures');
-const userPhotos = createPhotosDescriptions(DESCRIPTIONS);
 const photoFragment = document.createDocumentFragment();
 
 const renderPictures = (pictures) => {
@@ -17,4 +13,4 @@ const renderPictures = (pictures) => {
   picturesContainer.appendChild(photoFragment);
 };
 
-export {renderPictures, userPhotos};
+export {renderPictures};

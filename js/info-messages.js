@@ -1,10 +1,28 @@
 import {isEscapeKey} from './utils/is-escape-key.js';
 
-const errorContainerTemplate = document.querySelector('#error').content.querySelector('.error');
+const ALERT_SHOW_TIME = 5000;
+const showUnloadMessage = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+  alertContainer.textContent = message;
 
-const successContainerTemplate = document.querySelector('#success').content.querySelector('.success');
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
 
 const showErrorMessage = () => {
+  const errorContainerTemplate = document.querySelector('#error').content.querySelector('.error');
   const errorContainer = errorContainerTemplate.cloneNode(true);
   const errorCloseButton = errorContainer.querySelector('.error__button');
   errorContainer.style.zIndex = 100;
@@ -41,6 +59,7 @@ const showErrorMessage = () => {
 };
 
 const showSuccessMessage = () => {
+  const successContainerTemplate = document.querySelector('#success').content.querySelector('.success');
   const successContainer = successContainerTemplate.cloneNode(true);
   const successCloseButton = successContainer.querySelector('.success__button');
   successContainer.style.zIndex = 100;
@@ -76,4 +95,4 @@ const showSuccessMessage = () => {
   }
 };
 
-export {showErrorMessage, showSuccessMessage};
+export {showUnloadMessage, showErrorMessage, showSuccessMessage};
