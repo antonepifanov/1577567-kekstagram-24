@@ -1,5 +1,3 @@
-//import {MAX_AMOUNT_OF_COMMENTS} from './constants.js';
-
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
 const bigPictureCommentTemplate = document.querySelector('#social__comment').content.querySelector('.social__comment');
