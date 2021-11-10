@@ -5,6 +5,7 @@ import {onFiltersChange, toUnsetEffect} from './slider.js';
 import {onHashtagInput} from './on-hashtag-input.js';
 import {showErrorMessage, showSuccessMessage} from './info-messages.js';
 import {sendData} from './api.js';
+import {loadOwnPicture} from './load-own-picture.js';
 
 const body = document.querySelector('body');
 const pictureUploadForm = body.querySelector('.img-upload__form');
@@ -52,6 +53,7 @@ pictureEditFormCancel.addEventListener('click', () => {
 
 uploadUserPictureInput.addEventListener('change', () => {
   openModal();
+  loadOwnPicture();
 });
 
 const setUserFormSubmit = (onSuccess) => {
