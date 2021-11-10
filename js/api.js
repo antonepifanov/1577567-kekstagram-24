@@ -1,4 +1,4 @@
-const getData = (onSuccess, onClick, onError) => {
+const getData = (onSuccess, getFilters, onClick, onError) => {
   fetch('https://24.javascript.pages.academy/kekstagram/data')
     .then((response) => {
       if (response.ok) {
@@ -10,6 +10,7 @@ const getData = (onSuccess, onClick, onError) => {
     .then((response) => response.json())
     .then((pictures) => {
       onSuccess(pictures);
+      getFilters(pictures);
       onClick(pictures);
     })
     .catch((err) => {
