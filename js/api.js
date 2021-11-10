@@ -28,16 +28,13 @@ const sendData = (onSuccess, messageOnSuccess, messageOnFail, removeMessage, bod
   )
     .then((response) => {
       if (response.ok) {
-        removeMessage();
         onSuccess();
         messageOnSuccess();
       } else {
-        removeMessage();
         messageOnFail();
       }
     })
     .catch(() => {
-      removeMessage();
       messageOnFail();
     })
     .finally(() => removeMessage());
