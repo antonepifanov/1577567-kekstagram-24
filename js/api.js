@@ -10,8 +10,8 @@ const getData = (onSuccess, getFilters, onClick, onError) => {
     .then((response) => response.json())
     .then((pictures) => {
       onSuccess(pictures);
-      getFilters(pictures);
       onClick(pictures);
+      getFilters(pictures);
     })
     .catch((err) => {
       onError(err);
