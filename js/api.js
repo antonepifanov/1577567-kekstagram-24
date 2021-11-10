@@ -18,7 +18,7 @@ const getData = (onSuccess, getFilters, onClick, onError) => {
     });
 };
 
-const sendData = (onSuccess, messageOnSuccess, messageOnFail, body) => {
+const sendData = (onSuccess, messageOnSuccess, messageOnFail, removeMessage, body) => {
   fetch(
     'https://24.javascript.pages.academy/kekstagram',
     {
@@ -28,15 +28,19 @@ const sendData = (onSuccess, messageOnSuccess, messageOnFail, body) => {
   )
     .then((response) => {
       if (response.ok) {
+        removeMessage();
         onSuccess();
         messageOnSuccess();
       } else {
+        removeMessage();
         messageOnFail();
       }
     })
     .catch(() => {
+      removeMessage();
       messageOnFail();
-    });
+    })
+    .finally(() => removeMessage());
 };
 
 export {getData, sendData};

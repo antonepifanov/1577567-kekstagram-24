@@ -32,6 +32,8 @@ const scale = () => {
 const scaleCancel = () => {
   buttonPlus.removeEventListener('click', onBiggerControlClick);
   buttonMinus.removeEventListener('click', onSmallerControlClick);
+  previewImg.style.transform = 'scale(1)';
+  value = `${MAX_VALUE}%`;
 };
 
-export {scale, scaleCancel};
+export {MAX_VALUE, scale, scaleCancel};
