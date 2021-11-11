@@ -23,13 +23,14 @@ const renderPictureModal = (arrayOfPhotos) => {
       evt.preventDefault();
       bigPicture.classList.remove('hidden');
       body.classList.add('modal-open');
+
+      pictures.forEach((picture, index) => {
+        if (evt.target.closest('.picture') === picture) {
+          renderBigPicture(arrayOfPhotos[index]);
+          createCommentsBlock(arrayOfPhotos[index]);
+        }
+      });
     }
-    pictures.forEach((picture, index) => {
-      if (picture === evt.target.closest('.picture')) {
-        renderBigPicture(arrayOfPhotos[index]);
-        createCommentsBlock(arrayOfPhotos[index]);
-      }
-    });
     document.addEventListener('keydown', onModalEscKeydown);
   };
 

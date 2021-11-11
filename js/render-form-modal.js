@@ -3,8 +3,9 @@ import {undoDefaultAction} from './utils/undo-default-action.js';
 import {scale, scaleCancel} from './scale.js';
 import {onFiltersChange, toUnsetEffect} from './slider.js';
 import {onHashtagInput} from './on-hashtag-input.js';
-import {showErrorMessage, showSuccessMessage} from './info-messages.js';
+import {showErrorMessage, showSuccessMessage, showLoadingProcessMessage, removeLoadingProcessMessage} from './info-messages.js';
 import {sendData} from './api.js';
+import {loadOwnPicture} from './load-own-picture.js';
 
 const body = document.querySelector('body');
 const pictureUploadForm = body.querySelector('.img-upload__form');
@@ -37,8 +38,8 @@ function closeModal () {
 function openModal () {
   pictureEditModal.classList.remove('hidden');
   body.classList.add('modal-open');
-  toUnsetEffect();
   scale();
+  toUnsetEffect();
   effectsList.addEventListener('change', onFiltersChange);
   hashtagField.addEventListener('input', onHashtagInput);
   commentField.addEventListener('keydown', undoDefaultAction);
@@ -52,15 +53,18 @@ pictureEditFormCancel.addEventListener('click', () => {
 
 uploadUserPictureInput.addEventListener('change', () => {
   openModal();
+  loadOwnPicture();
 });
 
 const setUserFormSubmit = (onSuccess) => {
   pictureUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
+    showLoadingProcessMessage();
     sendData(
       () => onSuccess(),
       () => showSuccessMessage(),
       () => showErrorMessage(),
+      () => removeLoadingProcessMessage(),
       new FormData(evt.target),
     );
   });

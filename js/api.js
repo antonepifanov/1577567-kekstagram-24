@@ -10,15 +10,15 @@ const getData = (onSuccess, getFilters, onClick, onError) => {
     .then((response) => response.json())
     .then((pictures) => {
       onSuccess(pictures);
-      getFilters(pictures);
       onClick(pictures);
+      getFilters(pictures);
     })
     .catch((err) => {
       onError(err);
     });
 };
 
-const sendData = (onSuccess, messageOnSuccess, messageOnFail, body) => {
+const sendData = (onSuccess, messageOnSuccess, messageOnFail, removeMessage, body) => {
   fetch(
     'https://24.javascript.pages.academy/kekstagram',
     {
@@ -36,7 +36,8 @@ const sendData = (onSuccess, messageOnSuccess, messageOnFail, body) => {
     })
     .catch(() => {
       messageOnFail();
-    });
+    })
+    .finally(() => removeMessage());
 };
 
 export {getData, sendData};

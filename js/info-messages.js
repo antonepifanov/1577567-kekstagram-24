@@ -1,8 +1,18 @@
 import {isEscapeKey} from './utils/is-escape-key.js';
 
+const loadingProcessMessageTemplate = document.querySelector('#messages').content.querySelector('.img-upload__message--loading');
+const loadingProcessMessageContainer = loadingProcessMessageTemplate.cloneNode(true);
+const successContainerTemplate = document.querySelector('#success').content.querySelector('.success');
+const successContainer = successContainerTemplate.cloneNode(true);
+const successCloseButton = successContainer.querySelector('.success__button');
+const alertContainer = document.createElement('div');
+const errorContainerTemplate = document.querySelector('#error').content.querySelector('.error');
+const errorContainer = errorContainerTemplate.cloneNode(true);
+const errorCloseButton = errorContainer.querySelector('.error__button');
+
 const ALERT_SHOW_TIME = 5000;
+
 const showUnloadMessage = (message) => {
-  const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
   alertContainer.style.position = 'absolute';
   alertContainer.style.left = 0;
@@ -22,9 +32,6 @@ const showUnloadMessage = (message) => {
 };
 
 const showErrorMessage = () => {
-  const errorContainerTemplate = document.querySelector('#error').content.querySelector('.error');
-  const errorContainer = errorContainerTemplate.cloneNode(true);
-  const errorCloseButton = errorContainer.querySelector('.error__button');
   errorContainer.style.zIndex = 100;
   document.body.append(errorContainer);
 
@@ -59,9 +66,6 @@ const showErrorMessage = () => {
 };
 
 const showSuccessMessage = () => {
-  const successContainerTemplate = document.querySelector('#success').content.querySelector('.success');
-  const successContainer = successContainerTemplate.cloneNode(true);
-  const successCloseButton = successContainer.querySelector('.success__button');
   successContainer.style.zIndex = 100;
   document.body.append(successContainer);
 
@@ -95,4 +99,13 @@ const showSuccessMessage = () => {
   }
 };
 
-export {showUnloadMessage, showErrorMessage, showSuccessMessage};
+const showLoadingProcessMessage = () => {
+  loadingProcessMessageContainer.style.zIndex = 100;
+  document.body.append(loadingProcessMessageContainer);
+};
+
+const removeLoadingProcessMessage = () => {
+  loadingProcessMessageContainer.remove();
+};
+
+export {showUnloadMessage, showErrorMessage, showSuccessMessage, showLoadingProcessMessage, removeLoadingProcessMessage};
