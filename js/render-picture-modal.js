@@ -3,12 +3,13 @@ import {isEnterKey} from './utils/is-enter-key.js';
 import {renderBigPicture} from './render-big-picture.js';
 import {createCommentsBlock} from './create-comments-block.js';
 
+const bigPicture = document.querySelector('.big-picture');
+const body = document.querySelector('body');
+const closeButton = bigPicture.querySelector('.big-picture__cancel');
+const picturesContainer = document.querySelector('.pictures');
+
 const renderPictureModal = (arrayOfPhotos) => {
-  const bigPicture = document.querySelector('.big-picture');
-  const picturesContainer = document.querySelector('.pictures');
   const pictures = document.querySelectorAll('.picture');
-  const closeButton = bigPicture.querySelector('.big-picture__cancel');
-  const body = document.querySelector('body');
 
   const onModalEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
@@ -57,4 +58,4 @@ const renderPictureModal = (arrayOfPhotos) => {
   });
 };
 
-export {renderPictureModal};
+export {renderPictureModal, closeButton};

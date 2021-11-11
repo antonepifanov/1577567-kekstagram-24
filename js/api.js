@@ -11,6 +11,9 @@ const getData = (onSuccess, getFilters, onClick, onError) => {
     .then((pictures) => {
       onSuccess(pictures);
       onClick(pictures);
+      return pictures;
+    })
+    .then((pictures) => {
       getFilters(pictures);
     })
     .catch((err) => {
