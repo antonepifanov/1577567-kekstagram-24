@@ -43,7 +43,6 @@ const createRandomIndex = () => {
 };
 const getRandomIndex = createRandomIndex();
 
-
 const getFiltration = (pictures) => {
   filtersBlock.classList.remove('img-filters--inactive');
   filtersButtons.forEach((button) => {
