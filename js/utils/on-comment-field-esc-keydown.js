@@ -1,10 +1,10 @@
 import {isEscapeKey} from './is-escape-key.js';
 
-const undoDefaultAction = (evt) => {
+const onCommentFieldEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     evt.stopPropagation();
   }
 };
 
-export {undoDefaultAction};
+export {onCommentFieldEscKeydown};

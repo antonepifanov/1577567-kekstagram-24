@@ -5,5 +5,7 @@ import {getData} from './api.js';
 import {renderPictureModal} from './render-picture-modal.js';
 import {getFiltration} from './get-filtration.js';
 
-getData(renderPictures, getFiltration, renderPictureModal, showUnloadMessage);
+const DATA = 'https://24.javascript.pages.academy/kekstagram/data';
+
+getData(DATA, renderPictures, getFiltration, renderPictureModal, showUnloadMessage);
 setUserFormSubmit(closeModal);

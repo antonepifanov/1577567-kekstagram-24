@@ -1,5 +1,5 @@
-const getData = (onSuccess, getFilters, onClick, onError) => {
-  fetch('https://24.javascript.pages.academy/kekstagram/data')
+const getData = (dataURL, onSuccess, getFilters, onClick, onError) => {
+  fetch(dataURL)
     .then((response) => {
       if (response.ok) {
         return response;
@@ -21,9 +21,9 @@ const getData = (onSuccess, getFilters, onClick, onError) => {
     });
 };
 
-const sendData = (onSuccess, messageOnSuccess, messageOnFail, removeMessage, body) => {
+const sendData = (serverURL, onSuccess, messageOnSuccess, messageOnFail, removeMessage, closeModalWindow, body) => {
   fetch(
-    'https://24.javascript.pages.academy/kekstagram',
+    serverURL,
     {
       method: 'POST',
       body,
@@ -34,10 +34,12 @@ const sendData = (onSuccess, messageOnSuccess, messageOnFail, removeMessage, bod
         onSuccess();
         messageOnSuccess();
       } else {
+        closeModalWindow();
         messageOnFail();
       }
     })
     .catch(() => {
+      closeModalWindow();
       messageOnFail();
     })
     .finally(() => removeMessage());

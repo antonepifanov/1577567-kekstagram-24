@@ -1,7 +1,7 @@
 import {isEscapeKey} from './utils/is-escape-key.js';
-import {undoDefaultAction} from './utils/undo-default-action.js';
+import {onCommentFieldEscKeydown} from './utils/on-comment-field-esc-keydown.js';
 import {scale, scaleCancel} from './scale.js';
-import {onFiltersChange, toUnsetEffect} from './slider.js';
+import {onFiltersChange, unsetEffect} from './slider.js';
 import {onHashtagInput} from './on-hashtag-input.js';
 import {showErrorMessage, showSuccessMessage, showLoadingProcessMessage, removeLoadingProcessMessage} from './info-messages.js';
 import {sendData} from './api.js';
@@ -15,6 +15,7 @@ const pictureEditModal = pictureUploadForm.querySelector('.img-upload__overlay')
 const pictureEditFormCancel = pictureEditModal.querySelector('.img-upload__cancel');
 const commentField = document.querySelector('.text__description');
 const hashtagField = document.querySelector('.text__hashtags');
+const SEND_URL = 'https://24.javascript.pages.academy/kekstagram';
 
 const onModalEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -30,22 +31,22 @@ function closeModal () {
   scaleCancel();
   hashtagField.removeEventListener('input', onHashtagInput);
   effectsList.removeEventListener('change', onFiltersChange);
-  commentField.removeEventListener('keydown', undoDefaultAction);
-  hashtagField.removeEventListener('keydown', undoDefaultAction);
+  commentField.removeEventListener('keydown', onCommentFieldEscKeydown);
+  hashtagField.removeEventListener('keydown', onCommentFieldEscKeydown);
   document.removeEventListener('keydown', onModalEscKeydown);
 }
 
-function openModal () {
+const openModal = () => {
   pictureEditModal.classList.remove('hidden');
   body.classList.add('modal-open');
   scale();
-  toUnsetEffect();
+  unsetEffect();
   effectsList.addEventListener('change', onFiltersChange);
   hashtagField.addEventListener('input', onHashtagInput);
-  commentField.addEventListener('keydown', undoDefaultAction);
-  hashtagField.addEventListener('keydown', undoDefaultAction);
+  commentField.addEventListener('keydown', onCommentFieldEscKeydown);
+  hashtagField.addEventListener('keydown', onCommentFieldEscKeydown);
   document.addEventListener('keydown', onModalEscKeydown);
-}
+};
 
 pictureEditFormCancel.addEventListener('click', () => {
   closeModal();
@@ -61,10 +62,12 @@ const setUserFormSubmit = (onSuccess) => {
     evt.preventDefault();
     showLoadingProcessMessage();
     sendData(
+      SEND_URL,
       () => onSuccess(),
       () => showSuccessMessage(),
       () => showErrorMessage(),
       () => removeLoadingProcessMessage(),
+      () => closeModal(),
       new FormData(evt.target),
     );
   });
