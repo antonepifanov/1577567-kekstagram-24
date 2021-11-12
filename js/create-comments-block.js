@@ -12,9 +12,7 @@ let commentItems = [];
 let currentVisibleComments;
 
 const onCommentsLoaderPress = (items) => {
-  console.log(currentVisibleComments);
   currentVisibleComments = currentVisibleComments + COMMENTS_TO_ADD;
-  console.log(currentVisibleComments);
   items.forEach((comment, index) => {
     if (comment.classList.contains('hidden') && index < currentVisibleComments) {
       comment.classList.remove('hidden');
@@ -61,7 +59,6 @@ const createCommentsBlock = (picture) => {
   }
 
   closeButton.addEventListener('click', () => {
-    console.log('click');
     commentsLoader.removeEventListener('click', () => {
       onCommentsLoaderPress(commentItems);
     });
