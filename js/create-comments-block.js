@@ -1,5 +1,4 @@
 const bigPicture = document.querySelector('.big-picture');
-const closeButton = document.querySelector('.big-picture__cancel');
 const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
 const bigPictureCommentTemplate = document.querySelector('#social__comment').content.querySelector('.social__comment');
 const bigPictureCommentsListFragment = document.createDocumentFragment();
@@ -11,7 +10,7 @@ let comments = [];
 let commentItems = [];
 let currentVisibleComments;
 
-const onCommentsLoaderPress = (items) => {
+const setNumberOfComments = (items) => {
   currentVisibleComments = currentVisibleComments + COMMENTS_TO_ADD;
   items.forEach((comment, index) => {
     if (comment.classList.contains('hidden') && index < currentVisibleComments) {
@@ -24,6 +23,10 @@ const onCommentsLoaderPress = (items) => {
   } else {
     currentCommentsCount.textContent = currentVisibleComments;
   }
+};
+
+const onCommentsLoaderPress = () => {
+  setNumberOfComments(commentItems);
 };
 
 const createCommentsBlock = (picture) => {
@@ -53,16 +56,8 @@ const createCommentsBlock = (picture) => {
     });
 
     commentsLoader.classList.remove('hidden');
-    commentsLoader.addEventListener('click', () => {
-      onCommentsLoaderPress(commentItems);
-    });
+    commentsLoader.addEventListener('click', onCommentsLoaderPress);
   }
-
-  closeButton.addEventListener('click', () => {
-    commentsLoader.removeEventListener('click', () => {
-      onCommentsLoaderPress(commentItems);
-    });
-  });
 };
 
 export {createCommentsBlock, onCommentsLoaderPress};

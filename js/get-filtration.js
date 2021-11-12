@@ -5,10 +5,10 @@ import {renderPictureModal} from './render-picture-modal.js';
 
 const filtersBlock = document.querySelector('.img-filters');
 const filtersButtons = filtersBlock.querySelectorAll('.img-filters__button');
-const photos = document.querySelectorAll('.picture');
 const getRandomIndex = createRandomIndex();
 const RANDOM_PHOTO_COUNT =10;
 const RERENDER_DELAY = 500;
+let photos = [];
 
 function createRandomIndex  () {
   let previousPictures = [];
@@ -34,6 +34,7 @@ const removeClass = () => {
 };
 
 const removePictures = () => {
+  photos = document.querySelectorAll('.picture');
   photos.forEach((photo) => photo.remove());
 };
 
