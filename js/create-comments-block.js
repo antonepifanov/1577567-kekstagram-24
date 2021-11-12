@@ -42,9 +42,9 @@ const createCommentsBlock = (picture) => {
   });
   bigPictureCommentsList.appendChild(bigPictureCommentsListFragment);
 
-
   commentItems = bigPictureCommentsList.querySelectorAll('.social__comment');
   commentsLoader.classList.add('hidden');
+
   if (commentItems.length <= VISIBLE_COMMENTS) {
     currentCommentsCount.textContent = commentItems.length;
   } else {
@@ -60,4 +60,4 @@ const createCommentsBlock = (picture) => {
   }
 };
 
-export {createCommentsBlock, onCommentsLoaderPress};
+export {createCommentsBlock};
