@@ -83,7 +83,7 @@ const onSuccessCloseButtonClick = () => {
   closeSuccessModal();
 };
 
-function closeSuccessModal() {
+function closeSuccessModal () {
   successContainer.remove();
   successCloseButton.removeEventListener('click', onSuccessCloseButtonClick);
   document.removeEventListener('keydown', onSuccessModalEscKeydown);

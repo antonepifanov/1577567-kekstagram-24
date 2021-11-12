@@ -5,12 +5,10 @@ import {renderPictureModal} from './render-picture-modal.js';
 
 const filtersBlock = document.querySelector('.img-filters');
 const filtersButtons = filtersBlock.querySelectorAll('.img-filters__button');
-const getRandomIndex = createRandomIndex();
 const RANDOM_PHOTO_COUNT =10;
 const RERENDER_DELAY = 500;
-let photos = [];
 
-function createRandomIndex  () {
+const createRandomIndex = () => {
   let previousPictures = [];
   return function (array) {
     let itemIndex = getRandomPositiveInteger(0, array.length - 1);
@@ -25,7 +23,15 @@ function createRandomIndex  () {
     }
     return itemIndex;
   };
-}
+};
+
+const getRandomIndex = createRandomIndex();
+
+const getDefaultPictures = (pictures) => Array.from(pictures.slice());
+
+const getRandomPictures = (pictures) => Array.from({length: RANDOM_PHOTO_COUNT}, () => pictures[getRandomIndex(pictures)]);
+
+const getSortedPictures = (pictures) => Array.from(pictures.slice().sort((commentA, commentB) => commentB.comments.length - commentA.comments.length));
 
 const removeClass = () => {
   filtersButtons.forEach((button) => {
@@ -33,9 +39,10 @@ const removeClass = () => {
   });
 };
 
+const getPhotos = () => document.querySelectorAll('.picture');
+
 const removePictures = () => {
-  photos = document.querySelectorAll('.picture');
-  photos.forEach((photo) => photo.remove());
+  getPhotos().forEach((photo) => photo.remove());
 };
 
 const renderFilter = (pictures) => {
@@ -52,14 +59,11 @@ const getFiltration = (pictures) => {
         removeClass();
         evt.target.classList.add('img-filters__button--active');
         if (evt.target.matches('#filter-default')) {
-          const defaultPictures = Array.from(pictures.slice());
-          renderFilter(defaultPictures);
+          renderFilter(getDefaultPictures(pictures));
         } else if (evt.target.matches('#filter-random')) {
-          const randomPictures = Array.from({length: RANDOM_PHOTO_COUNT}, () => pictures[getRandomIndex(pictures)]);
-          renderFilter(randomPictures);
+          renderFilter(getRandomPictures(pictures));
         } else if (evt.target.matches('#filter-discussed')) {
-          const sortedPictures = Array.from(pictures.slice().sort((commentA, commentB) => commentB.comments.length - commentA.comments.length));
-          renderFilter(sortedPictures);
+          renderFilter(getSortedPictures(pictures));
         }
       },
       RERENDER_DELAY),

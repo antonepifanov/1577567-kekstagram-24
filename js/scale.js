@@ -36,4 +36,4 @@ const scaleCancel = () => {
   value = `${MAX_VALUE}%`;
 };
 
-export {MAX_VALUE, scale, scaleCancel};
+export {scale, scaleCancel};
