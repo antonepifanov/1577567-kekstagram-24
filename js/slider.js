@@ -1,9 +1,3 @@
-const pictureUploadForm = document.querySelector('.img-upload__form');
-const bigPictureImage = pictureUploadForm.querySelector('.img-upload__preview img');
-const sliderElementBlock = pictureUploadForm.querySelector('.effect-level');
-const sliderElement = pictureUploadForm.querySelector('.effect-level__slider');
-const valueElement = pictureUploadForm.querySelector('.effect-level__value');
-
 const FILTERS_CONFIG = {
   chrome: {
     options: {
@@ -70,6 +64,11 @@ const FILTERS_CONFIG = {
     unit: '',
   },
 };
+const pictureUploadForm = document.querySelector('.img-upload__form');
+const bigPictureImage = pictureUploadForm.querySelector('.img-upload__preview img');
+const sliderElementBlock = pictureUploadForm.querySelector('.effect-level');
+const sliderElement = pictureUploadForm.querySelector('.effect-level__slider');
+const valueElement = pictureUploadForm.querySelector('.effect-level__value');
 
 const setFilter = (filter) => {
   sliderElementBlock.classList.remove('hidden');

@@ -1,11 +1,13 @@
+const MAX_VALUE = 100;
+const STEP = 25;
+const MIN_VALUE = 25;
+
 const form = document.querySelector('.img-upload__form');
 const scaleControlValue = form.querySelector('.scale__control--value');
 const previewImg = form.querySelector('.img-upload__preview img');
 const buttonPlus = form.querySelector('.scale__control--bigger');
 const buttonMinus = form.querySelector('.scale__control--smaller');
-const MAX_VALUE = 100;
-const STEP = 25;
-const MIN_VALUE = 25;
+
 let value = scaleControlValue.value;
 
 const onBiggerControlClick = () => {
