@@ -1,6 +1,8 @@
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const uploadUserPictureInput = document.querySelector('.img-upload__input');
 const preview = document.querySelector('.img-upload__preview > img');
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 let file;
 let fileName = '';
 let matches = [];

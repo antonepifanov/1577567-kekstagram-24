@@ -1,6 +1,8 @@
-const hashtagField = document.querySelector('.text__hashtags');
-const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const MAX_HASHTAG_COUNT = 5;
+const REGULAR_EXPRESSION = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+
+const hashtagField = document.querySelector('.text__hashtags');
+
 let printHashtags =[];
 
 const onHashtagInput = () => {
@@ -13,7 +15,7 @@ const onHashtagInput = () => {
     } else if (hashtags.includes(hashtag, index + 1)) {
       hashtagField.setCustomValidity('Xэш-тег не может повторяться');
     } else if (hashtag.length > 0) {
-      if(!re.test(hashtag)) {
+      if(!REGULAR_EXPRESSION.test(hashtag)) {
         hashtagField.setCustomValidity('Xэш-тег начинается с # и состоит из букв и чисел. Максимальная длина одного хэш-тега 20 символов. Хэш-теги разделяются пробелами');
       }
     } else {

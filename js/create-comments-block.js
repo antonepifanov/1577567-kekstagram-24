@@ -1,11 +1,13 @@
+const VISIBLE_COMMENTS = 5;
+const COMMENTS_TO_ADD = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
 const bigPictureCommentTemplate = document.querySelector('#social__comment').content.querySelector('.social__comment');
 const bigPictureCommentsListFragment = document.createDocumentFragment();
 const commentsLoader = document.querySelector('.comments-loader');
 const currentCommentsCount = document.querySelector('.current-comments-count');
-const VISIBLE_COMMENTS = 5;
-const COMMENTS_TO_ADD = 5;
+
 let bigPictureComment;
 let comments = [];
 let commentItems = [];

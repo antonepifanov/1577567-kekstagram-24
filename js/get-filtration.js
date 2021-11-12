@@ -3,17 +3,18 @@ import {getRandomPositiveInteger} from './utils/get-random-positive-integer.js';
 import {debounce} from './utils/debounce.js';
 import {renderPictureModal} from './render-picture-modal.js';
 
-const filtersBlock = document.querySelector('.img-filters');
-const filtersButtons = filtersBlock.querySelectorAll('.img-filters__button');
 const RANDOM_PHOTO_COUNT =10;
 const RERENDER_DELAY = 500;
 
+const filtersBlock = document.querySelector('.img-filters');
+const filtersButtons = filtersBlock.querySelectorAll('.img-filters__button');
+
 const createRandomIndex = () => {
   let previousPictures = [];
-  return function (array) {
-    let itemIndex = getRandomPositiveInteger(0, array.length - 1);
+  return function (pictures) {
+    let itemIndex = getRandomPositiveInteger(0, pictures.length - 1);
     while (previousPictures.includes(itemIndex)) {
-      itemIndex = getRandomPositiveInteger(0, array.length - 1);
+      itemIndex = getRandomPositiveInteger(0, pictures.length - 1);
     }
     if (previousPictures.length < RANDOM_PHOTO_COUNT) {
       previousPictures.push(itemIndex);

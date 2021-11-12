@@ -7,6 +7,8 @@ import {showErrorMessage, showSuccessMessage, showLoadingProcessMessage, removeL
 import {sendData} from './api.js';
 import {loadOwnPicture} from './load-own-picture.js';
 
+const SERVER_URL = 'https://24.javascript.pages.academy/kekstagram';
+
 const body = document.querySelector('body');
 const pictureUploadForm = body.querySelector('.img-upload__form');
 const effectsList = pictureUploadForm.querySelector('.effects__list');
@@ -15,7 +17,6 @@ const pictureEditModal = pictureUploadForm.querySelector('.img-upload__overlay')
 const pictureEditFormCancel = pictureEditModal.querySelector('.img-upload__cancel');
 const commentField = document.querySelector('.text__description');
 const hashtagField = document.querySelector('.text__hashtags');
-const SERVER_URL = 'https://24.javascript.pages.academy/kekstagram';
 
 const onModalEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
