@@ -15,7 +15,7 @@ const pictureEditModal = pictureUploadForm.querySelector('.img-upload__overlay')
 const pictureEditFormCancel = pictureEditModal.querySelector('.img-upload__cancel');
 const commentField = document.querySelector('.text__description');
 const hashtagField = document.querySelector('.text__hashtags');
-const SEND_URL = 'https://24.javascript.pages.academy/kekstagram';
+const SERVER_URL = 'https://24.javascript.pages.academy/kekstagram';
 
 const onModalEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -62,7 +62,7 @@ const setUserFormSubmit = (onSuccess) => {
     evt.preventDefault();
     showLoadingProcessMessage();
     sendData(
-      SEND_URL,
+      SERVER_URL,
       () => onSuccess(),
       () => showSuccessMessage(),
       () => showErrorMessage(),

@@ -6,6 +6,7 @@ const commentsLoader = document.querySelector('.comments-loader');
 const currentCommentsCount = document.querySelector('.current-comments-count');
 const VISIBLE_COMMENTS = 5;
 const COMMENTS_TO_ADD = 5;
+let bigPictureComment;
 let comments = [];
 let commentItems = [];
 let currentVisibleComments;
@@ -34,7 +35,7 @@ const createCommentsBlock = (picture) => {
   comments = picture.comments;
   bigPictureCommentsList.innerHTML = '';
   comments.forEach(({avatar, name, message}) => {
-    const bigPictureComment = bigPictureCommentTemplate.cloneNode(true);
+    bigPictureComment = bigPictureCommentTemplate.cloneNode(true);
     bigPictureComment.querySelector('.social__picture').src = avatar;
     bigPictureComment.querySelector('.social__picture').alt = name;
     bigPictureComment.querySelector('.social__text').textContent = message;

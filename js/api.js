@@ -1,5 +1,5 @@
-const getData = (dataURL, onSuccess, getFilters, onClick, onError) => {
-  fetch(dataURL)
+const getData = (getURL, onSuccess, getFilters, onClick, onError) => {
+  fetch(getURL)
     .then((response) => {
       if (response.ok) {
         return response;
@@ -21,9 +21,9 @@ const getData = (dataURL, onSuccess, getFilters, onClick, onError) => {
     });
 };
 
-const sendData = (serverURL, onSuccess, messageOnSuccess, messageOnFail, removeMessage, closeModalWindow, body) => {
+const sendData = (postURL, onSuccess, messageOnSuccess, messageOnFail, removeMessage, closeModalWindow, body) => {
   fetch(
-    serverURL,
+    postURL,
     {
       method: 'POST',
       body,
