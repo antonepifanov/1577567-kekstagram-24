@@ -1,18 +1,34 @@
 const bigPicture = document.querySelector('.big-picture');
+const closeButton = document.querySelector('.big-picture__cancel');
 const bigPictureCommentsList = bigPicture.querySelector('.social__comments');
 const bigPictureCommentTemplate = document.querySelector('#social__comment').content.querySelector('.social__comment');
 const bigPictureCommentsListFragment = document.createDocumentFragment();
-const socialCommentCount = bigPicture.querySelector('.social__comment-count');
-const commentsLoader = bigPicture.querySelector('.comments-loader');
-const currentCommentsCount = bigPicture.querySelector('.current-comments-count');
+const commentsLoader = document.querySelector('.comments-loader');
+const currentCommentsCount = document.querySelector('.current-comments-count');
 const VISIBLE_COMMENTS = 5;
-let currentCommentsCountValue;
+const COMMENTS_TO_ADD = 5;
+let comments = [];
+let commentItems = [];
+let currentVisibleComments;
 
+const onCommentsLoaderPress = (items) => {
+  currentVisibleComments = currentVisibleComments + COMMENTS_TO_ADD;
+  items.forEach((comment, index) => {
+    if (comment.classList.contains('hidden') && index < currentVisibleComments) {
+      comment.classList.remove('hidden');
+    }
+  });
+  if (currentVisibleComments >= items.length) {
+    commentsLoader.classList.add('hidden');
+    currentCommentsCount.textContent = items.length;
+  } else {
+    currentCommentsCount.textContent = currentVisibleComments;
+  }
+};
 
 const createCommentsBlock = (picture) => {
-  commentsLoader.classList.add('hidden');
-  socialCommentCount.classList.add('hidden');
-  const comments = picture.comments;
+  currentVisibleComments = VISIBLE_COMMENTS;
+  comments = picture.comments;
   bigPictureCommentsList.innerHTML = '';
   comments.forEach(({avatar, name, message}) => {
     const bigPictureComment = bigPictureCommentTemplate.cloneNode(true);
@@ -22,33 +38,31 @@ const createCommentsBlock = (picture) => {
     bigPictureCommentsListFragment.appendChild(bigPictureComment);
   });
   bigPictureCommentsList.appendChild(bigPictureCommentsListFragment);
-  const commentItems = bigPictureCommentsList.querySelectorAll('.social__comment');
-  if (commentItems.length > VISIBLE_COMMENTS) {
-    commentsLoader.classList.remove('hidden');
-    socialCommentCount.classList.remove('hidden');
+
+
+  commentItems = bigPictureCommentsList.querySelectorAll('.social__comment');
+  commentsLoader.classList.add('hidden');
+  if (commentItems.length <= VISIBLE_COMMENTS) {
+    currentCommentsCount.textContent = commentItems.length;
+  } else {
+    currentCommentsCount.textContent = VISIBLE_COMMENTS;
     commentItems.forEach((comment, index) => {
-      comment.classList.add('hidden');
-      if (index < VISIBLE_COMMENTS) {
-        comment.classList.remove('hidden');
+      if (index >= VISIBLE_COMMENTS) {
+        comment.classList.add('hidden');
       }
     });
-    currentCommentsCountValue = VISIBLE_COMMENTS;
-    currentCommentsCount.textContent = currentCommentsCountValue;
+
+    commentsLoader.classList.remove('hidden');
     commentsLoader.addEventListener('click', () => {
-      let addCommentCounter = 0;
-      commentItems.forEach((comment) => {
-        if (comment.classList.contains('hidden') && addCommentCounter !== VISIBLE_COMMENTS) {
-          comment.classList.remove('hidden');
-          addCommentCounter += 1;
-          currentCommentsCountValue += 1;
-          currentCommentsCount.textContent = currentCommentsCountValue;
-        }
-      });
-      if (currentCommentsCountValue === commentItems.length) {
-        commentsLoader.classList.add('hidden');
-      }
+      onCommentsLoaderPress(commentItems);
     });
   }
+
+  closeButton.addEventListener('click', () => {
+    commentsLoader.removeEventListener('click', () => {
+      onCommentsLoaderPress(commentItems);
+    });
+  });
 };
 
-export {createCommentsBlock};
+export {createCommentsBlock, onCommentsLoaderPress};

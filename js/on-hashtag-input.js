@@ -1,15 +1,16 @@
 const hashtagField = document.querySelector('.text__hashtags');
+const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const MAX_HASHTAG_COUNT = 5;
+let printHashtags =[];
 
 const onHashtagInput = () => {
-  const hashtagKit = hashtagField.value.toLowerCase().trim().split(' ');
-  const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+  printHashtags = hashtagField.value.toLowerCase().trim().split(' ');
   hashtagField.setCustomValidity('');
-  hashtagKit.forEach((hashtag, index, array) => {
-    if (hashtagKit.length > MAX_HASHTAG_COUNT) {
+  printHashtags.forEach((hashtag, index, hashtags) => {
+    if (printHashtags.length > MAX_HASHTAG_COUNT) {
       hashtagField.setCustomValidity(`Нельзя добавлять более ${MAX_HASHTAG_COUNT} хэш-тегов`);
       hashtagField.style.borderColor = 'red';
-    } else if (array.includes(hashtag, index + 1)) {
+    } else if (hashtags.includes(hashtag, index + 1)) {
       hashtagField.setCustomValidity('Xэш-тег не может повторяться');
     } else if (hashtag.length > 0) {
       if(!re.test(hashtag)) {

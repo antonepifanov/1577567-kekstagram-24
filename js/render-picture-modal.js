@@ -8,7 +8,7 @@ const body = document.querySelector('body');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const picturesContainer = document.querySelector('.pictures');
 
-const renderPictureModal = (arrayOfPhotos) => {
+const renderPictureModal = (photos) => {
   const pictures = document.querySelectorAll('.picture');
 
   const onModalEscKeydown = (evt) => {
@@ -27,8 +27,8 @@ const renderPictureModal = (arrayOfPhotos) => {
 
       pictures.forEach((picture, index) => {
         if (evt.target.closest('.picture') === picture) {
-          renderBigPicture(arrayOfPhotos[index]);
-          createCommentsBlock(arrayOfPhotos[index]);
+          renderBigPicture(photos[index]);
+          createCommentsBlock(photos[index]);
         }
       });
     }
@@ -58,4 +58,4 @@ const renderPictureModal = (arrayOfPhotos) => {
   });
 };
 
-export {renderPictureModal, closeButton};
+export {renderPictureModal};

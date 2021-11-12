@@ -71,6 +71,45 @@ const FILTERS_CONFIG = {
   },
 };
 
+const setFilter = (filter) => {
+  sliderElementBlock.classList.remove('hidden');
+  sliderElement.noUiSlider.updateOptions(filter.options);
+  sliderElement.noUiSlider.on('update', (values, handle) => {
+    bigPictureImage.style.filter = `${filter.style}(${values[handle]}${filter.unit})`;
+    valueElement.value = values[handle];
+  });
+};
+
+const unsetEffect = () => {
+  bigPictureImage.className = '';
+  bigPictureImage.style.filter = 'none';
+  valueElement.value = 'none';
+  bigPictureImage.classList.add('effects__preview--none');
+  sliderElementBlock.classList.add('hidden');
+};
+
+const onFiltersChange = (evt) => {
+  if (evt.target.matches('input[type="radio"]')) {
+    bigPictureImage.className = '';
+    bigPictureImage.classList.add(`effects__preview--${evt.target.value}`);
+    if (evt.target.value === 'none') {
+      sliderElementBlock.classList.add('hidden');
+      bigPictureImage.style.filter = 'none';
+      valueElement.value = 'none';
+    } else if (evt.target.value === 'chrome') {
+      setFilter(FILTERS_CONFIG.chrome);
+    } else if (evt.target.value === 'sepia') {
+      setFilter(FILTERS_CONFIG.sepia);
+    } else if (evt.target.value === 'marvin') {
+      setFilter(FILTERS_CONFIG.marvin);
+    } else if (evt.target.value === 'phobos') {
+      setFilter(FILTERS_CONFIG.phobos);
+    } else if (evt.target.value === 'heat') {
+      setFilter(FILTERS_CONFIG.heat);
+    }
+  }
+};
+
 noUiSlider.create(sliderElement, {
   range: {
     min: 0,
@@ -92,43 +131,4 @@ noUiSlider.create(sliderElement, {
   },
 });
 
-const toApplyFilter = (filter) => {
-  sliderElementBlock.classList.remove('hidden');
-  sliderElement.noUiSlider.updateOptions(filter.options);
-  sliderElement.noUiSlider.on('update', (values, handle) => {
-    bigPictureImage.style.filter = `${filter.style}(${values[handle]}${filter.unit})`;
-    valueElement.value = values[handle];
-  });
-};
-
-const toUnsetEffect = () => {
-  bigPictureImage.className = '';
-  bigPictureImage.style.filter = 'none';
-  valueElement.value = 'none';
-  bigPictureImage.classList.add('effects__preview--none');
-  sliderElementBlock.classList.add('hidden');
-};
-
-const onFiltersChange = (evt) => {
-  if (evt.target.matches('input[type="radio"]')) {
-    bigPictureImage.className = '';
-    bigPictureImage.classList.add(`effects__preview--${evt.target.value}`);
-    if (evt.target.value === 'none') {
-      sliderElementBlock.classList.add('hidden');
-      bigPictureImage.style.filter = 'none';
-      valueElement.value = 'none';
-    } else if (evt.target.value === 'chrome') {
-      toApplyFilter(FILTERS_CONFIG.chrome);
-    } else if (evt.target.value === 'sepia') {
-      toApplyFilter(FILTERS_CONFIG.sepia);
-    } else if (evt.target.value === 'marvin') {
-      toApplyFilter(FILTERS_CONFIG.marvin);
-    } else if (evt.target.value === 'phobos') {
-      toApplyFilter(FILTERS_CONFIG.phobos);
-    } else if (evt.target.value === 'heat') {
-      toApplyFilter(FILTERS_CONFIG.heat);
-    }
-  }
-};
-
-export {onFiltersChange, toUnsetEffect};
+export {onFiltersChange, unsetEffect};
